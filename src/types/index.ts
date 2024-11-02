@@ -5,7 +5,6 @@ export interface ICard {
     title: string;
     category: string;
     price: number | null;
-    selected: boolean;
 }
 
 export interface IUser {

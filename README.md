@@ -53,7 +53,6 @@ export interface ICard {
     title: string;
     category: string;
     price: number | null;
-    selected: boolean;
 }
 ```
 
@@ -156,7 +155,7 @@ export type TUserContact = Pick<IUser, 'email'|'tel'>;
 - getCardPreview(id:string):ICard - получает карточку по ее id
 - setCards(cards: ICard[]):void - сохраняет массив карточек товаров
 
-#### Класс IBasket
+#### Класс Basket
 Класс отвечает за хранение и логику работы с данными по оформлению заказа.\
 Конструктор класса принимает инстант брокера событий.\
 В полях класса хранятся следующие данные:
@@ -170,7 +169,7 @@ export type TUserContact = Pick<IUser, 'email'|'tel'>;
 - getTotal():number - получает общую стоимость товаров, добавленных в корзину
 - getCounter():number - получает количество добавленных товаров в корзину
 
-#### Класс IUserData
+#### Класс UserData
 Класс отвечает за хранение и логику работы с данными пользователя для оформлению заказа.\
 Конструктор класса принимает инстант брокера событий.\
 В полях класса хранятся следующие данные:
@@ -211,7 +210,7 @@ export type TUserContact = Pick<IUser, 'email'|'tel'>;
 
 Поля класса: 
 - submitButton: HTMLButtonElement - кнопка подтверждения
-- errors: Record<string, HTMLElement> - объект хранящий все элементы для вывода ошибок под полями формы с привязкой к атрибуту name импутов
+- errors: HTMLElement - объект хранящий все элементы для вывода ошибок под полями формы с привязкой к атрибуту name импутов
 - events: IEvents - брокер событий
 
 Методы:
@@ -234,6 +233,7 @@ export type TUserContact = Pick<IUser, 'email'|'tel'>;
 
 Поля класса:
 - catalog: HTMLElement[] - каталог с карточками товаров
+- basket: HTMLElement - элемент корзины
 - counter: number - счетчик количества товаров в корзине
 - locked: boolean - блокировка страницы, если например открыто модальное окно
 - events: IEvents - брокер событий
@@ -259,7 +259,7 @@ export type TUserContact = Pick<IUser, 'email'|'tel'>;
 - setButtonBasket(value: boolean) - меняет состояние кнопки оформления заказа
 
 #### Класс UserPay
-Отвечает за отображение модального окна с формой выбора способа оплаты и заполнения адреса доставки. В конструктор принимает DOM-элемент и экземпляр класса `EventEmitter` для возможности инициации событий.
+Является дочерним классом класса `Form` и отвечает за отображение модального окна с формой выбора способа оплаты и заполнения адреса доставки. В конструктор принимает DOM-элемент и экземпляр класса `EventEmitter` для возможности инициации событий.
 constructor(container: HTMLFormElement, events: IEvents)
 
 Поля класса:
@@ -272,7 +272,7 @@ constructor(container: HTMLFormElement, events: IEvents)
 - setAddress (value:string) - сохраняет введенный адрес
 
 #### Класс UserContact
-Отвечает за отображение модального окна с формой заполнения e-mail и телефона. В конструктор принимает DOM-элемент и экземпляр класса `EventEmitter` для возможности инициации событий.
+Является дочерним классом класса `Form` и отвечает за отображение модального окна с формой заполнения e-mail и телефона. В конструктор принимает DOM-элемент и экземпляр класса `EventEmitter` для возможности инициации событий.
 constructor(container: HTMLFormElement, events: IEvents)
 
 Поля класса:
