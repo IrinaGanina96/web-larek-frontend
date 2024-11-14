@@ -1,3 +1,4 @@
+import { ensureElement } from "../utils/utils";
 import { Component } from "./base/Component";
 
 interface ISuccess {
@@ -15,8 +16,8 @@ export class Success extends Component<ISuccess> {
     constructor(container: HTMLElement, actions?: ISuccessActions) {
         super(container);
 
-        this.buttonSuccess = this.container.querySelector('.order-success__close');
-        this._total = this.container.querySelector('.order-success__description');
+        this.buttonSuccess = ensureElement<HTMLElement>('.order-success__close', this.container);
+        this._total = ensureElement<HTMLElement>('.order-success__description', this.container);
 
         if (actions?.onClick) {
             this.buttonSuccess.addEventListener('click', actions.onClick);

@@ -1,3 +1,4 @@
+import { ensureElement } from "../utils/utils";
 import { Component } from "./base/Component";
 import { IEvents } from "./base/events";
 
@@ -16,10 +17,10 @@ export class Page extends Component<IPage> {
     constructor(protected container: HTMLElement, protected events: IEvents) {
         super(container)
 
-        this._counter = this.container.querySelector('.header__basket-counter');
-        this._catalog = this.container.querySelector('.gallery');
-        this._wrapper = this.container.querySelector('.page__wrapper');
-        this._basket = this.container.querySelector('.header__basket');
+        this._counter = ensureElement<HTMLElement>('.header__basket-counter', this.container);
+        this._catalog = ensureElement<HTMLElement>('.gallery', this.container);
+        this._wrapper = ensureElement<HTMLElement>('.page__wrapper', this.container);
+        this._basket = ensureElement<HTMLElement>('.header__basket', this.container);
 
         this._basket.addEventListener('click', () => {
             this.events.emit('basket:open');

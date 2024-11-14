@@ -1,5 +1,5 @@
 import { IBasketData } from "../types";
-import { createElement } from "../utils/utils";
+import { createElement, ensureElement } from "../utils/utils";
 import { Component } from "./base/Component";
 import { IEvents } from "./base/events";
 
@@ -11,9 +11,9 @@ export class Basket extends Component<IBasketData> {
     constructor(container: HTMLElement, protected events: IEvents) {
         super(container)
 
-        this._cards = this.container.querySelector('.basket__list');
-        this._total = this.container.querySelector('.basket__price');
-        this._buttonBasket = this.container.querySelector('.basket__button');
+        this._cards = ensureElement<HTMLElement>('.basket__list', this.container);
+        this._total = ensureElement<HTMLElement>('.basket__price', this.container);
+        this._buttonBasket = ensureElement<HTMLButtonElement>('.basket__button', this.container);
 
         this._buttonBasket?.addEventListener('click', () => {
             this.events.emit('userPay:open');

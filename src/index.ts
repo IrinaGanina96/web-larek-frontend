@@ -13,7 +13,7 @@ import { UserContact } from './components/UserContact';
 import './scss/styles.scss';
 import { IApi, ICard, IUserData, TUserContact, TUserPay } from './types';
 import { API_URL, CDN_URL, settings } from './utils/constants';
-import { cloneTemplate } from './utils/utils';
+import { cloneTemplate, ensureElement } from './utils/utils';
 import { Success } from './components/Success';
 
 const events = new EventEmitter();
@@ -21,15 +21,15 @@ const events = new EventEmitter();
 const baseApi: IApi = new Api(API_URL, settings);
 const api = new AppApi(CDN_URL, baseApi);
 
-const modal = new Modal (document.querySelector('#modal-container'), events);
+const modal = new Modal (ensureElement<HTMLElement>('#modal-container'), events);
 
-const cardTemplatePreview: HTMLTemplateElement = document.querySelector('#card-preview');
-const cardTemplateCatalog: HTMLTemplateElement = document.querySelector('#card-catalog');
-const cardTemplateBasket: HTMLTemplateElement = document.querySelector('#card-basket');
-const basketTemplate: HTMLTemplateElement = document.querySelector('#basket');
-const orderTemplate: HTMLTemplateElement = document.querySelector('#order');
-const contactTemplate: HTMLTemplateElement = document.querySelector('#contacts');
-const successTemplate: HTMLTemplateElement = document.querySelector('#success');
+const cardTemplatePreview = ensureElement<HTMLTemplateElement>('#card-preview');
+const cardTemplateCatalog = ensureElement<HTMLTemplateElement>('#card-catalog');
+const cardTemplateBasket = ensureElement<HTMLTemplateElement>('#card-basket');
+const basketTemplate = ensureElement<HTMLTemplateElement>('#basket');
+const orderTemplate = ensureElement<HTMLTemplateElement>('#order');
+const contactTemplate = ensureElement<HTMLTemplateElement>('#contacts');
+const successTemplate = ensureElement<HTMLTemplateElement>('#success');
 
 const page = new Page(document.body, events);
 const basket = new Basket (cloneTemplate(basketTemplate), events)
@@ -200,10 +200,10 @@ events.on('contacts:submit', () => {
 	console.log(orderData)
 	api.orderLots(orderData)
         .then((result) => {
+			basketData.clearBasket();
 			const success = new Success(cloneTemplate(successTemplate), {
 			onClick: () => {
 				modal.close();
-				basketData.clearBasket();
 				events.emit('success:submit');
 			}
 		});

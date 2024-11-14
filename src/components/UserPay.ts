@@ -1,4 +1,5 @@
 import { TUserPay } from "../types";
+import { ensureElement } from "../utils/utils";
 import { IEvents } from "./base/events";
 import { Form } from "./Form";
 
@@ -10,8 +11,8 @@ export class UserPay extends Form<TUserPay> {
     constructor(container: HTMLFormElement, events: IEvents) {
         super(container, events);
 
-        this.onlineButton = this.container.querySelector('.button_alt[name="card"]');
-        this.offlineButton = this.container.querySelector('.button_alt[name="cash"]');
+        this.onlineButton = ensureElement<HTMLButtonElement>('.button_alt[name="card"]', this.container);
+        this.offlineButton = ensureElement<HTMLButtonElement>('.button_alt[name="cash"]', this.container);
         this.onlineButton.classList.add('button_alt-active');
 
         this.onlineButton.addEventListener('click', () => {
